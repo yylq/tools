@@ -1,0 +1,24 @@
+#!/bin/sh
+
+function useage()
+{
+    echo "usage: mode host file"
+}
+if [ $# -lt 3 ]; then
+    useage
+    #echo "usage: mode host file"
+    exit    
+fi 
+
+mode=$1
+host=$2
+file=$3
+user=`awk '{print $1}' ~/.ssh/auto.txt`
+passwd=`awk '{print $2}' ~/.ssh/auto.txt`
+if [ "$mode" = "upload" ]; then
+    echo "./upload $host $file"
+    ./upload $user $passwd $host $file
+else
+    echo "./download $host $file"
+    ./download $user $passwd $host $file
+fi

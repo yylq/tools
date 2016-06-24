@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f  
+set user [lindex $argv 0 ]
+set password [lindex $argv 1 ]
+
+set ip [lindex $argv 2 ] 
+set file [lindex $argv 3 ]
+#set user `cat ~/.ssh/auto.txt|awk '{print $}'`
+#set password `cat ~/.ssh/auto.txt|awk '{print $2}'`
+set timeout 10                   
+#spawn ssh liqiang-c@$ip
+spawn scp $user@$ip:~/$file ./$file
+expect {                 
+"*yes/no" { send "yes\r"; exp_continue}  
+"*password:" { send "$password\r" }      
+}  
+interact
